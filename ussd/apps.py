@@ -21,11 +21,8 @@ class UssdConfig(AppConfig):
         path_name = screens.__path__[0]
         package_name = screens.__name__
 
-        loaded_screens = get_all_screens_module(path_name, package_name)
+        get_all_screens_module(path_name, package_name)
 
-        for i in loaded_screens:
-            print("loaded screens:", i)
-        print("loading filters")
         from ussd.filters import date_filters
         from ussd.filters import dict_filters
         from ussd.filters import list_filters

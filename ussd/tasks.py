@@ -18,14 +18,11 @@ def report_session(self, session_id, screen_content):
         action="report_session_task", session_id=session_id
     )
 
-    logger.info('start')
-
     ussd_report_session_data = screen_content['ussd_report_session']
 
     session = ussd_session(session_id)
 
     if session.get('posted'):
-        logger.info("session_already_reported", posted=session['posted'])
         return
 
     request_conf = UssdHandlerAbstract.render_request_conf(

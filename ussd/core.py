@@ -590,14 +590,7 @@ class UssdHandlerAbstract(object):
     def make_request(cls, http_request_conf, response_session_key_save,
                      session, logger=None
                      ):
-        logger = logger or get_logger(__name__).bind(
-            action="make_request",
-            session_id=session.session_key
-        )
-        logger.info("sending_request", **http_request_conf)
         response = requests.request(**http_request_conf)
-        logger.info("response", status_code=response.status_code,
-                         content=response.content)
 
         response_to_save = cls.get_variables_from_response_obj(response)
 
@@ -797,16 +790,12 @@ class UssdView(with_metaclass(UssdViewMetaClass, APIView)):
             {"ussd_request": ussd_request.all_variables()}
         )
 
-        self.logger.debug('gateway_request', text=ussd_request.input)
-
         # Invoke handlers
         ussd_response = self.run_handlers(ussd_request)
         ussd_request.session[ussd_airflow_variables.last_update] = \
             utilities.datetime_to_string(datetime.now())
         # Save session
         ussd_request.session.save()
-        self.logger.debug('gateway_response', text=ussd_response.dumps(),
-                     input="{redacted}")
 
         return ussd_response
 

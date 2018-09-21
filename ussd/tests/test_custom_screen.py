@@ -19,7 +19,6 @@ class SampleCustomHandler1(UssdHandlerAbstract):
 
     def handle_ussd_input(self, ussd_input):
         # Do anything custom here
-        print(ussd_input)  # pep 8 for the sake of using it.
         return self.ussd_request.forward('custom_screen_2')
 
 

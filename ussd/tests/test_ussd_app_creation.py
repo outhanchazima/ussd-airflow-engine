@@ -42,6 +42,5 @@ class TestUssdAppCreation(LiveServerTestCase):
         self.assertEqual(response.content,
                          b'END Example Quit Screen. Delete this and define your own customer journey screens.')
         self.assertEqual(response.status_code, 200)
-        print(response.status_code)
         os.system('rm -r TestUssdApp')  # Remove created app. Clean up
 

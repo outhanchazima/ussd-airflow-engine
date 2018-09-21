@@ -19,5 +19,5 @@ class Command(BaseCommand):
             app_name = options.get('ussd_app_name')[0]
             call_command('startapp', app_name, template=path)
         except CommandError:
-            print('Provide a valid django App Name as documented here: '
-                  ' https://docs.djangoproject.com/en/1.10/ref/django-admin/')
+            self.stderr.write('Provide a valid django App Name as documented here: '
+                              ' https://docs.djangoproject.com/en/1.10/ref/django-admin/')
