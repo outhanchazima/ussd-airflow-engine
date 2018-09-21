@@ -1,7 +1,13 @@
-from ussd.tests import UssdTestCase
-from unittest import mock
+import sys
+if sys.version_info[0] > 2:
+    from unittest import mock
+else:
+    import mock
+
 from django.http.response import JsonResponse, HttpResponse
 from django.test.utils import override_settings
+
+from ussd.tests import UssdTestCase
 
 
 @override_settings(

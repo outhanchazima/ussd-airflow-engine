@@ -1,11 +1,18 @@
-from ussd.tests import UssdTestCase, TestCase
-from unittest import mock
+import sys
+from uuid import uuid4
+
+if sys.version_info[0] > 2:
+    from unittest import mock
+else:
+    import mock
+
+from celery.exceptions import MaxRetriesExceededError
 from django.test import override_settings
 from django.http.response import JsonResponse
+
+from ussd.tests import UssdTestCase, TestCase
 from ussd.core import ussd_session
 from ussd.tasks import report_session
-from uuid import uuid4
-from celery.exceptions import MaxRetriesExceededError
 
 
 @override_settings(

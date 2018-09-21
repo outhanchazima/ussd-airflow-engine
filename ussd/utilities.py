@@ -18,11 +18,11 @@ def str_to_class(import_path):
     return class_
 
 
-def datetime_to_string(date_obj: datetime):
+def datetime_to_string(date_obj):
     return date_obj.strftime(date_format)
 
 
-def string_to_datetime(date_str_obj: str):
+def string_to_datetime(date_str_obj):
     return datetime.strptime(date_str_obj, date_format)
 
 

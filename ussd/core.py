@@ -1,8 +1,7 @@
 """
 Comming soon
 """
-from urllib.parse import unquote
-from copy import copy, deepcopy
+from copy import copy
 from rest_framework.views import APIView
 from django.http import HttpResponse
 from structlog import get_logger
@@ -11,7 +10,7 @@ from django.conf import settings
 from importlib import import_module
 from django.contrib.sessions.backends import signed_cookies
 from django.contrib.sessions.backends.base import CreateError
-from jinja2 import Template, Environment, TemplateSyntaxError
+from jinja2 import Template, Environment
 from .screens.serializers import UssdBaseSerializer
 from rest_framework.serializers import SerializerMetaclass
 import re
@@ -27,6 +26,15 @@ import requests
 import inspect
 from ussd.tasks import report_session
 from ussd import utilities
+
+from six import add_metaclass, with_metaclass
+
+import sys
+
+if sys.version_info[0] > 2:
+    from urllib.parse import unquote
+else:
+    from urllib import unquote
 
 _registered_ussd_handlers = {}
 _registered_filters = {}
@@ -247,8 +255,6 @@ class UssdRequest(object):
         return session_mapping.session_id
 
 
-
-
 class UssdResponse(object):
     """
     :param text:
@@ -311,12 +317,13 @@ class UssdHandlerMetaClass(type):
             _registered_ussd_handlers[attr['screen_type']] = cls
 
 
-class UssdHandlerAbstract(object, metaclass=UssdHandlerMetaClass):
+@add_metaclass(UssdHandlerMetaClass)
+class UssdHandlerAbstract(object):
     abstract = True
 
-    def __init__(self, ussd_request: UssdRequest,
-                 handler: str, screen_content: dict,
-                 initial_screen: dict, logger=None):
+    def __init__(self, ussd_request,
+                 handler, screen_content,
+                 initial_screen, logger=None):
         self.ussd_request = ussd_request
         self.handler = handler
         self.screen_content = screen_content
@@ -327,7 +334,7 @@ class UssdHandlerAbstract(object, metaclass=UssdHandlerMetaClass):
         self.logger = logger or get_logger(__name__).bind(
             handler=self.handler,
             screen_type=getattr(self, 'screen_type', 'custom_screen'),
-            **ussd_request.all_variables(),
+            **ussd_request.all_variables()
         )
         self.initial_screen = initial_screen
 
@@ -404,7 +411,7 @@ class UssdHandlerAbstract(object, metaclass=UssdHandlerMetaClass):
             self.screen_content['default_next_screen']
         )
     @staticmethod
-    def get_session_items(session) -> dict:
+    def get_session_items(session):
         return dict(iter(session.items()))
 
     @classmethod
@@ -486,7 +493,7 @@ class UssdHandlerAbstract(object, metaclass=UssdHandlerMetaClass):
                 return default
 
     @classmethod
-    def validate(cls, screen_name: str, ussd_content: dict) -> (bool, dict):
+    def validate(cls, screen_name, ussd_content):
         screen_content = ussd_content[screen_name]
         # adding screen name in context might be needed by validator
         ussd_content['screen_name'] = screen_name
@@ -600,7 +607,7 @@ class UssdHandlerAbstract(object, metaclass=UssdHandlerMetaClass):
         return response
 
     @staticmethod
-    def fire_ussd_report_session_task(initial_screen: dict, session_id: str,
+    def fire_ussd_report_session_task(initial_screen, session_id,
                             support_countdown=True):
         ussd_report_session = initial_screen['ussd_report_session']
         args = (session_id,)
@@ -617,7 +624,7 @@ class UssdHandlerAbstract(object, metaclass=UssdHandlerMetaClass):
         )
 
 
-class UssdView(APIView, metaclass=UssdViewMetaClass):
+class UssdView(with_metaclass(UssdViewMetaClass, APIView)):
     """
     To create Ussd View requires the following things:
         - Inherit from **UssdView** (Mandatory)
@@ -865,7 +872,7 @@ class UssdView(APIView, metaclass=UssdViewMetaClass):
         return ussd_response
 
     @staticmethod
-    def validate_ussd_journey(ussd_content: dict) -> (bool, dict):
+    def validate_ussd_journey(ussd_content):
         errors = {}
         is_valid = True
 

@@ -314,7 +314,7 @@ class MenuScreen(UssdHandlerAbstract):
                     return option.next_screen
         return False
 
-    def get_items(self, start_index: int = 1) -> list:
+    def get_items(self, start_index=1):
         """
         This gets ListItems
         :return:
@@ -340,7 +340,7 @@ class MenuScreen(UssdHandlerAbstract):
             text, value, items, start_index
         )
 
-    def get_menu_options(self, start_index: int = 1) -> list:
+    def get_menu_options(self, start_index=1):
         menu_options = []
         for i, option in enumerate(self.screen_content.get('options', []),
                                    start_index):
