@@ -758,8 +758,10 @@ class UssdView(with_metaclass(UssdViewMetaClass, APIView)):
             try:
                 ussd_response = self.ussd_dispatcher(response)
             except Exception as e:
-                if settings.DEBUG:
-                    ussd_response = UssdResponse(str(e))
+                self.logger.error(e)
+
+                ussd_response = UssdResponse('Something went wrong, please try again.', status=False)
+
             return self.ussd_response_handler(ussd_response)
         return super(UssdView, self).finalize_response(
             request, response, args, kwargs)
