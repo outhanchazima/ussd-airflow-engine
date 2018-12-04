@@ -29,6 +29,9 @@ from ussd import utilities
 
 from six import add_metaclass, with_metaclass
 
+import structlog
+structlog.configure(logger_factory=structlog.stdlib.LoggerFactory())
+
 import sys
 
 if sys.version_info[0] > 2:

@@ -3,6 +3,9 @@ import requests
 from structlog import get_logger
 from celery.exceptions import MaxRetriesExceededError
 
+import structlog
+structlog.configure(logger_factory=structlog.stdlib.LoggerFactory())
+
 
 @app.task(bind=True)
 def http_task(self, request_conf):
