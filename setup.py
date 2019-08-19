@@ -15,7 +15,6 @@ setup(
         'PyYAML>=5.1,<5.2',
         'PyStaticConfiguration==0.10.4',
         'requests<2.13',
-        'celery>=4.3,<4.4',
         'PyConfigure==0.5.9',
         'django-annoying==0.10.3',
     ],

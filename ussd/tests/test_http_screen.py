@@ -7,11 +7,6 @@ from django.test.utils import override_settings
 from ussd.tests import UssdTestCase
 
 
-@override_settings(
-        CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
-        CELERY_ALWAYS_EAGER=True,
-        BROKER_BACKEND='memory'
-    )
 class TestHttpScreen(UssdTestCase.BaseUssdTestCase):
     validation_error_message = dict(
         screen_name="Screen not available",
@@ -83,7 +78,7 @@ class TestHttpScreen(UssdTestCase.BaseUssdTestCase):
         ussd_client.send('')
 
         # check http_task is called
-        mock_http_task.delay.assert_called_once_with(
+        mock_http_task.assert_called_once_with(
             request_conf=dict(
                 method='get',
                 url="https://localhost:8000/mock/submission",

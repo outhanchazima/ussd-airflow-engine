@@ -45,12 +45,12 @@ class HttpScreen(UssdHandlerAbstract):
             The json body is saved in session using this session_key
 
         3. synchronous (optional defaults to true)
-           This defines the nature of the api call. If its asynchronous the
-           request will be made later in celery task.
+           This defines the nature of the api call. Asynchronous requests are
+           not supported.
 
         4. next_screen
-            After the api call has been made or been scheduled to celery task
-            ussd request is forwarded to this next_screen
+           After the api call has been made, ussd request is forwarded to this
+           next_screen
 
     Examples of router screens:
 
@@ -66,7 +66,7 @@ class HttpScreen(UssdHandlerAbstract):
         )
 
         if self.screen_content.get('synchronous', False):
-            http_task.delay(request_conf=http_request_conf)
+            http_task(request_conf=http_request_conf)
         else:
             self.make_request(
                 http_request_conf=http_request_conf,

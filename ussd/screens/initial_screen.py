@@ -62,8 +62,7 @@ class InitialScreen(UssdHandlerAbstract):
     unless the mno send us a request. 
     
     Most mnos don't send notifier 3rd party application about the session being
-    dropped. The work around we use is schedule celery task to run after 
-    15 minutes ( by that time we know there is no active session)
+    dropped.
     
     Below is an example of how to schedule a ussd report session after 15min
         
@@ -77,8 +76,6 @@ class InitialScreen(UssdHandlerAbstract):
                 next_screen: screen_one
                 ussd_report_session:
                     session_key: reported
-                    retry_mechanism:
-                        max_retries: 3
                     validate_response:
                         - expression: "{{reported.status_code}} == 200"
                     request_conf:
@@ -87,9 +84,6 @@ class InitialScreen(UssdHandlerAbstract):
                         data:
                             ussd_interaction: "{{ussd_interaction}}"
                             session_id: "{{session_id}}"
-                    async_parameters:
-                        queue: report_session
-                        countdown: 900
                     
         
         Lets explain the variables in ussd_report_session
@@ -106,13 +100,6 @@ class InitialScreen(UssdHandlerAbstract):
                 your options and if one of them is valid it would 
                 mark session as posted (This is used to avoid double ussd 
                 submission)
-                
-            - retry_mechanism ( Optional )
-                After validating your response and all of them fail 
-                we will go ahead and retry if this field is active. 
-                
-            - async_parameters ( Optional )
-                This is are the parameters used to make ussd request
             
             
                 
