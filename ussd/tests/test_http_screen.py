@@ -1,8 +1,5 @@
 import sys
-if sys.version_info[0] > 2:
-    from unittest import mock
-else:
-    import mock
+from unittest import mock
 
 from django.http.response import JsonResponse, HttpResponse
 from django.test.utils import override_settings
@@ -109,5 +106,3 @@ class TestHttpScreen(UssdTestCase.BaseUssdTestCase):
             "balance is  and full content Balance is 257.\n",
             ussd_client.send('')
         )
-
-

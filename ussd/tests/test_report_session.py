@@ -1,10 +1,7 @@
 import sys
 from uuid import uuid4
 
-if sys.version_info[0] > 2:
-    from unittest import mock
-else:
-    import mock
+from unittest import mock
 
 from celery.exceptions import MaxRetriesExceededError
 from django.test import override_settings
@@ -305,5 +302,3 @@ class TestingUssdReportSession(UssdTestCase.BaseUssdTestCase, TestCase):
     def testing_invalid_customer_journey(self):
         # this is tested in the initial screen
         pass
-
-

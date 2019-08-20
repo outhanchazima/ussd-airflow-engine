@@ -1,43 +1,37 @@
 from setuptools import setup, find_packages
-import os
 from ussd import VERSION
 
-
-def _strip_comments(l):
-    return l.split('#', 1)[0].strip()
-
-
-def _pip_requirement(req):
-    if req.startswith('-r '):
-        _, path = req.split()
-        return reqs(*path.split('/'))
-    return [req]
-
-
-def _reqs(*f):
-    return [
-        _pip_requirement(r) for r in (
-            _strip_comments(l) for l in open(
-                os.path.join(os.getcwd(), *f)).readlines()
-        ) if r]
-
-
-def reqs(*f):
-    """Parse requirement file.
-    Example:
-        reqs('default.txt')          # requirements/default.txt
-        reqs('extras', 'redis.txt')  # requirements/extras/redis.txt
-    Returns:
-        List[str]: list of requirements specified in the file.
-    """
-    return [req for subreq in _reqs(*f) for req in subreq]
 
 setup(
     name='ussd_airflow',
     version=VERSION,
     packages=find_packages(exclude=('ussd_airflow',)),
     url='https://github.com/mwaaas/ussd_airflow',
-    install_requires=reqs('default.txt'),
+    install_requires=[
+        'django<2',
+        'djangorestframework==3.5.3',
+        'structlog<16.2.0',
+        'jinja2<2.9',
+        'PyYaml==3.12',
+        'PyStaticConfiguration==0.10.4',
+        'requests<2.13',
+        'celery<4.1',
+        'PyConfigure==0.5.9',
+        'django-annoying==0.10.3',
+    ],
+    extras_require={
+        'test': [
+            'pytest-django>=3.5,<3.6',
+            'freezegun',
+            'psycopg2-binary',
+            'pytest-cov>=2.7,<2.8',
+        ],
+        'docs': [
+            'sphinx==1.5.1',
+            'sphinx-autobuild==0.6.0',
+            'sphinx_rtd_theme==0.1.9',
+        ]
+    },
     include_package_data=True,
     license='MIT',
     author='Mwas',
