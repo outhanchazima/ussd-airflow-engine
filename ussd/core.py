@@ -603,21 +603,10 @@ class UssdHandlerAbstract(object):
         return response
 
     @staticmethod
-    def fire_ussd_report_session_task(initial_screen, session_id,
-                            support_countdown=True):
-        ussd_report_session = initial_screen['ussd_report_session']
+    def fire_ussd_report_session_task(initial_screen, session_id):
         args = (session_id,)
         kwargs = {'screen_content': initial_screen}
-        keyword_args = ussd_report_session.get("async_parameters",
-                                               {"countdown": 900}).copy()
-        if not support_countdown and keyword_args.get('countdown'):
-            del keyword_args['countdown']
-
-        report_session.apply_async(
-            args=args,
-            kwargs=kwargs,
-            **keyword_args
-        )
+        report_session(args=args, kwargs=kwargs)
 
 
 class UssdView(with_metaclass(UssdViewMetaClass, APIView)):

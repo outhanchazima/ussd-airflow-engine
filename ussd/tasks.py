@@ -1,19 +1,15 @@
-from celery import current_app as app
 import requests
 from structlog import get_logger
-from celery.exceptions import MaxRetriesExceededError
 
 import structlog
 structlog.configure(logger_factory=structlog.stdlib.LoggerFactory())
 
 
-@app.task(bind=True)
-def http_task(self, request_conf):
+def http_task(request_conf):
     requests.request(**request_conf)
 
 
-@app.task(bind=True)
-def report_session(self, session_id, screen_content):
+def report_session(session_id, screen_content):
     # to avoid circular import
     from ussd.core import ussd_session, UssdHandlerAbstract
 
@@ -50,10 +46,3 @@ def report_session(self, session_id, screen_content):
             session['posted'] = True
             session.save()
             return
-
-    if ussd_report_session_data.get('retry_mechanism'):
-        try:
-            self.retry(**screen_content[
-                    'ussd_report_session']['retry_mechanism'])
-        except MaxRetriesExceededError as e:
-            logger.warning("report_session_error", error_message=str(e))
