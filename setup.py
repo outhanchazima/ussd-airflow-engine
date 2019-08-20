@@ -16,7 +16,7 @@ setup(
         'PyStaticConfiguration==0.10.4',
         'requests<2.13',
         'PyConfigure==0.5.9',
-        'django-annoying==0.10.3',
+        'django-annoying==0.10.4',
     ],
     extras_require={
         'test': [
