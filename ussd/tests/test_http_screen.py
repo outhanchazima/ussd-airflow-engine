@@ -21,7 +21,7 @@ class TestHttpScreen(UssdTestCase.BaseUssdTestCase):
             )
         ),
         http_screen_invalid_synchronous=dict(
-            synchronous=['"not boolean" is not a valid boolean.']
+            synchronous=['Must be a valid boolean.']
         )
     )
 

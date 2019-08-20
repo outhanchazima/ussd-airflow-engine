@@ -7,13 +7,19 @@ class TestInputHandler(UssdTestCase.BaseUssdTestCase):
     validation_error_message = dict(
         enter_height={
             "validators": {
-                'text': ['This field is required.']
-                },
-                "next_screen": ['This field is required.']
+                0: {
+                    'text': ['This field is required.']
+                }
             },
+            "next_screen": ['This field is required.']
+        },
         enter_age={
             "input_identifier": ['This field is required.'],
-            "next_screen": {'next_screen': ['thank_you_screen is missing in ussd journey']},
+            "next_screen": {
+                0: {
+                    'next_screen': ['thank_you_screen is missing in ussd journey']
+                }
+            },
             "options": ['Expected a list of items but got type "bool".']
         },
         show_information={
@@ -23,7 +29,11 @@ class TestInputHandler(UssdTestCase.BaseUssdTestCase):
             "initial_screen": ["This field is required."]
         },
         invalid_next_screen=dict(
-            next_screen={'next_screen': ['This field is required.']}
+            next_screen={
+                0: {
+                    'next_screen': ['This field is required.']
+                }
+            }
         )
     )
 

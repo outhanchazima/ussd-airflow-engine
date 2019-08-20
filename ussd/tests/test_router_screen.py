@@ -8,9 +8,14 @@ class TestRouterHandler(UssdTestCase.BaseUssdTestCase):
             router_options=['This field is required.']
         ),
         invalid_router_2=dict(
-            router_options=dict(
-                next_screen=['This field is required.']
-            )
+            router_options={
+                0: {
+                    'next_screen': ['This field is required.']
+                },
+                1: {
+                    'expression': ['This field is required.']
+                }
+            }
         )
     )
 

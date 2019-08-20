@@ -56,19 +56,32 @@ class TestMenuHandler(UssdTestCase.BaseUssdTestCase):
             text=['This field is required.']
         ),
         types_of_fruit=dict(
-            options=dict(
-                next_screen={'next_screen': ["invalid_screen is missing in ussd journey"]}
-            )
+            options={
+                0: {
+                    'next_screen': {
+                        0: {
+                            'next_screen': ["invalid_screen is missing in ussd journey"]
+                        }
+                    }
+                }
+            }
         ),
         types_of_drinks=dict(
-            options=dict(
-                next_screen=['This field is required.']
-            )
+            options={
+                0: {
+                    'next_screen': ['This field is required.']
+                }
+            }
         ),
         rice_chosen=dict(
-            options=dict(
-                next_screen=['This field is required.']
-            )
+            options={
+                0: {
+                    'next_screen': ['This field is required.']
+                },
+                1: {
+                    'text': ['This field is required.']
+                }
+            }
         ),
         types_of_vegetables=dict(
             items=dict(
