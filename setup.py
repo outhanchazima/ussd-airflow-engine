@@ -11,7 +11,7 @@ setup(
         'Django>=2.2,<2.3',
         'djangorestframework>=3.10,<4.0',
         'structlog<19.2.0',
-        'jinja2<2.9',
+        'jinja2<2.11',
         'PyYAML>=5.1,<5.2',
         'PyStaticConfiguration==0.10.4',
         'requests<2.23',
