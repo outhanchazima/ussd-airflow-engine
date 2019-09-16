@@ -19,7 +19,6 @@ import os
 from configure import Configuration
 from datetime import datetime
 from ussd.models import SessionLookup
-from annoying.functions import get_object_or_None
 from ussd import defaults as ussd_airflow_variables
 from django.utils import timezone
 import requests
@@ -157,16 +156,16 @@ class UssdRequest(object):
                  expiry=180,
                  **kwargs):
         """
-        :param session_id: Used to maintain session 
-        :param phone_number: user dialing in   
+        :param session_id: Used to maintain session
+        :param phone_number: user dialing in
         :param ussd_input: input entered by user
         :param language: language to be used
         :param default_language: language to used
-        :param use_built_in_session_management: Used to enable ussd_airflow to 
-            manage its own session, by default its set to False, is set to true 
-        then the session_id should be None and expiry can't be None. 
+        :param use_built_in_session_management: Used to enable ussd_airflow to
+            manage its own session, by default its set to False, is set to true
+        then the session_id should be None and expiry can't be None.
         :param expiry: Its only used if use_built_in_session_management has
-        been enabled. 
+        been enabled.
         :param kwargs: All other extra arguments
         """
 
@@ -228,7 +227,10 @@ class UssdRequest(object):
         return all_variables
 
     def get_or_create_session_id(self, user_id):
-        session_mapping = get_object_or_None(SessionLookup, user_id=user_id)
+        try:
+            session_mapping = SessionLookup.objects.get(user_id=user_id)
+        except SessionLookup.DoesNotExist:
+            session_mapping = None
 
         # if its missing create a new one.
         if session_mapping is None:
