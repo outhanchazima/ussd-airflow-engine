@@ -19,7 +19,7 @@ setup(
     ],
     extras_require={
         'test': [
-            'pytest-django>=3.5,<3.9',
+            'pytest-django>=3.5,<3.10',
             'freezegun',
             'psycopg2-binary',
             'pytest-cov>=2.7,<2.9',
