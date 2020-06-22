@@ -27,7 +27,7 @@ setup(
         'docs': [
             'sphinx>=2.2,<3.1',
             'sphinx-autobuild>=0.7,<0.8',
-            'sphinx_rtd_theme>=0.4,<0.5',
+            'sphinx_rtd_theme>=0.4,<0.6',
         ]
     },
     include_package_data=True,
