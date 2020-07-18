@@ -13,7 +13,7 @@ setup(
         'structlog<20.2.0',
         'jinja2<2.12',
         'PyYAML>=5.1,<5.4',
-        'PyStaticConfiguration==0.10.4',
+        'PyStaticConfiguration==0.10.5',
         'requests<2.24',
         'PyConfigure==0.5.9',
     ],
