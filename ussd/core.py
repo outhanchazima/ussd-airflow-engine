@@ -1,6 +1,5 @@
-"""
-Comming soon
-"""
+from urllib.parse import unquote
+
 from copy import copy
 from rest_framework.views import APIView
 from django.http import HttpResponse
@@ -25,18 +24,9 @@ import requests
 import inspect
 from ussd.tasks import report_session
 from ussd import utilities
-
-from six import add_metaclass, with_metaclass
-
 import structlog
 structlog.configure(logger_factory=structlog.stdlib.LoggerFactory())
 
-import sys
-
-if sys.version_info[0] > 2:
-    from urllib.parse import unquote
-else:
-    from urllib import unquote
 
 _registered_ussd_handlers = {}
 _registered_filters = {}
@@ -260,7 +250,7 @@ class UssdRequest(object):
         return session_mapping.session_id
 
 
-class UssdResponse(object):
+class UssdResponse:
     """
     :param text:
         This is the ussd text to display to the user
@@ -322,8 +312,7 @@ class UssdHandlerMetaClass(type):
             _registered_ussd_handlers[attr['screen_type']] = cls
 
 
-@add_metaclass(UssdHandlerMetaClass)
-class UssdHandlerAbstract(object):
+class UssdHandlerAbstract(metaclass=UssdHandlerMetaClass):
     abstract = True
 
     def __init__(self, ussd_request,
@@ -611,7 +600,7 @@ class UssdHandlerAbstract(object):
         report_session(args=args, kwargs=kwargs)
 
 
-class UssdView(with_metaclass(UssdViewMetaClass, APIView)):
+class UssdView(APIView, metaclass=UssdViewMetaClass):
     """
     To create Ussd View requires the following things:
         - Inherit from **UssdView** (Mandatory)
