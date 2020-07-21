@@ -1,7 +1,7 @@
 from ussd.core import UssdHandlerAbstract, UssdResponse
 from ussd.screens.serializers import UssdContentBaseSerializer, \
     UssdTextSerializer, NextUssdScreenSerializer, MenuOptionSerializer
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 import re
 from rest_framework import serializers
 from ussd.screens.menu_screen import MenuScreen
@@ -78,7 +78,7 @@ class InputScreen(MenuScreen):
                 regex = re.compile(regex_expression)
                 is_valid = bool(
                     regex.search(
-                        force_text(self.ussd_request.input)
+                        force_str(self.ussd_request.input)
                     ))
             else:
                 is_valid = self.evaluate_jija_expression(

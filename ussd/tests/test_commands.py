@@ -1,6 +1,7 @@
+from io import StringIO
+
 from django.core.management import call_command
 from django.test import TestCase
-from django.utils.six import StringIO
 from .sample_screen_definition import path
 from django.core.management.base import CommandError
 import json
