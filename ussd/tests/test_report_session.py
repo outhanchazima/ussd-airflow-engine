@@ -1,3 +1,4 @@
+import os
 import sys
 from uuid import uuid4
 
@@ -212,12 +213,11 @@ class TestingUssdReportSession(UssdTestCase.BaseUssdTestCase, TestCase):
         self.assertFalse(mock_request.called)
 
     @mock.patch("ussd.core.report_session")
+    @mock.patch.dict(os.environ, {"TEST_VARIABLE": "variable_test"})
     def test_report_task_only_called_when_activated(self, mock_report_session):
         # using a journey that report_session has not been activated
         # and one that has quit screen
-        ussd_client = self.get_ussd_client(
-            journey='valid_quit_screen_conf.yml')
-
+        ussd_client = self.get_ussd_client(journey='valid_quit_screen_conf.yml')
         self.assertEqual(
             "Test getting variable from os environmen. variable_test",
             ussd_client.send('') # dial in

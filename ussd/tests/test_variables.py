@@ -1,3 +1,6 @@
+import os
+from unittest import mock
+
 from ussd.tests import UssdTestCase
 from ussd.core import ussd_session
 
@@ -13,6 +16,7 @@ class TestScreensUsingVariable(UssdTestCase.BaseUssdTestCase):
             }
         )
 
+    @mock.patch.dict(os.environ, {"ENVIRONMENT": "sample_variable_two"})
     def test_initial_variables_are_created(self):
         ussd_client = self.get_ussd_client()
 

@@ -1,6 +1,6 @@
-"""
-This test quit screen
-"""
+import os
+
+from unittest import mock
 from ussd.tests import UssdTestCase
 
 
@@ -11,6 +11,7 @@ class TestQuitHandler(UssdTestCase.BaseUssdTestCase):
         )
     )
 
+    @mock.patch.dict(os.environ, {"TEST_VARIABLE": "variable_test"})
     def test(self):
         ussd_client = self.ussd_client(service_code="test_")
 
