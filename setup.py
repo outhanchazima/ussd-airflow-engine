@@ -14,7 +14,7 @@ setup(
         'jinja2<2.12',
         'PyYAML>=5.1,<5.4',
         'PyStaticConfiguration==0.10.5',
-        'requests<2.25',
+        'requests<2.26',
         'PyConfigure==0.5.9',
     ],
     extras_require={
