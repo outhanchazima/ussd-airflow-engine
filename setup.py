@@ -25,7 +25,7 @@ setup(
             'pytest-cov>=2.7,<2.11',
         ],
         'docs': [
-            'sphinx>=2.2,<3.3',
+            'sphinx>=2.2,<3.4',
             'sphinx-autobuild>=0.7,<2020.10',
             'sphinx_rtd_theme>=0.4,<0.6',
         ]
