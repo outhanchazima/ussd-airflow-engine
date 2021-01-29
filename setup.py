@@ -22,7 +22,7 @@ setup(
             'pytest-django>=3.5,<4.2',
             'freezegun',
             'psycopg2-binary',
-            'pytest-cov>=2.7,<2.11',
+            'pytest-cov>=2.7,<2.12',
         ],
         'docs': [
             'sphinx>=2.2,<3.5',
