@@ -10,7 +10,7 @@ setup(
     install_requires=[
         'Django>=2.2,<3.2',
         'djangorestframework>=3.10,<4.0',
-        'structlog<20.3.0',
+        'structlog<21.2.0',
         'jinja2<2.12',
         'PyYAML>=5.1,<5.5',
         'PyStaticConfiguration==0.10.5',
