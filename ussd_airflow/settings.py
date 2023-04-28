@@ -74,9 +74,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DATABASE_NAME', 'ussd_airflow'),
-        'USER': os.environ.get('DATABASE_USER', None),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', None),
-        'HOST': os.environ.get('DATABASE_HOST', ''),
+        'USER': os.environ.get('DATABASE_USER', 'ussd_airflow'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'ussd_airflow'),
+        'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
         'PORT': os.environ.get('DATABASE_PORT', 5432),
     }
 }

@@ -1,7 +1,7 @@
-from django.http import HttpResponse
 from django.conf import settings
+from django.http import HttpResponse
 
-from ussd.core import UssdView, UssdRequest
+from ussd.core import UssdRequest, UssdView
 from ussd.tests.sample_screen_definition import path
 
 
